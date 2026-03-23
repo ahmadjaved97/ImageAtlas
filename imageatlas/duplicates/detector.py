@@ -116,6 +116,10 @@ class DuplicateDetector:
         """
         Get or create detection strategy.
         """
+<<<<<<< HEAD
+=======
+        print(self.method)
+>>>>>>> origin/main
         if self._strategy is None:
             if self.method == 'crypto_hash':
                 self._strategy = CryptographicHashStrategy(
@@ -210,6 +214,10 @@ class DuplicateDetector:
         
         cache = self._get_cache()
         strategy = self._get_strategy()
+<<<<<<< HEAD
+=======
+        print(strategy)
+>>>>>>> origin/main
 
 
         # Try to load from cache

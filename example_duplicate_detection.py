@@ -123,7 +123,6 @@ def example_4_clip_detection():
 
     # Detect duplicates
     results = detector.detect("/home/s63ajave/datasets/temp_ds")
-
     print(results.summary())
 
 def example_5_from_embeddings():
@@ -168,8 +167,9 @@ def example_6_cluster_then_deduplicate():
         n_clusters=5,
         clustering_method='kmeans'
     )
-    
+
     cluster_results = clusterer.fit('/home/s63ajave/datasets/temp_ds')
+
     
     # Now find duplicates within each cluster
     detector = DuplicateDetector(
@@ -202,6 +202,7 @@ def example_7_load_cached_results():
     # Detect and save
     detector = DuplicateDetector(method='phash', threshold=0.9)
     results = detector.detect('/home/s63ajave/datasets/temp_ds')
+
     results.save('./output/duplicates.h5')
     
     # Later, load without recomputing
@@ -239,6 +240,7 @@ def example_10_comprehensive_workflow():
     
     # Configuration
     image_dir = '/home/s63ajave/datasets/temp_ds'
+
     output_dir = './output'
     
     # Step 1: Detect duplicates
