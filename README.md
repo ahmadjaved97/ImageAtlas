@@ -38,7 +38,8 @@ pip install -e .
 
 ## 🚀 Quick Start
 
-### Minimal Working Example
+### Image Clustering
+
 
 ```python
 import os
@@ -73,6 +74,42 @@ results.create_cluster_folders(
 
 That's it! Your images are now clustered, visualized, and organized.
 
+### Duplicate Detection
+ 
+```python
+from imageatlas import DuplicateDetector, create_duplicate_grids
+ 
+# Initialize detector with perceptual hashing
+detector = DuplicateDetector(
+    method='phash',
+    threshold=0.8,
+    grouping=True,
+    best_selection='resolution'  # Keep highest resolution image per group
+)
+ 
+# Detect duplicates
+results = detector.detect("./path/to/images")
+ 
+# Print summary statistics
+print(results.summary())
+ 
+# Export results
+results.to_csv("./output/duplicates.csv")
+results.to_json("./output/duplicates.json")
+ 
+# Visualize duplicate groups as grids
+create_duplicate_grids(
+    results,
+    image_dir="./path/to/images",
+    output_dir="./output/grids",
+    top_n=10
+)
+```
+
+More comprehensive examples can be found in the [`examples/`](examples/) folder.
+
+---
+
 ## Available Models & Algorithms
 
 ### Feature Extraction Models
@@ -105,6 +142,30 @@ That's it! Your images are now clustered, visualized, and organized.
 | **UMAP**                  | `n_components`, `n_neighbors`, `min_dist` |
 | **t-SNE(in development)** | `n_components`, `perplexity`              |
 
+
+## Duplicate Detection
+ 
+ImageAtlas provides multiple strategies for finding duplicate or near-duplicate images in your dataset.
+ 
+### Detection Methods
+ 
+| Method | Description | Best For |
+|---|---|---|
+| `phash` | Perceptual hashing — fast, lightweight | Exact/near-exact duplicates |
+| `embedding` | Deep learning embeddings (DINOv2, etc.) | Semantic similarity |
+| `clip` | CLIP-based semantic similarity | Cross-domain similarity |
+ 
+### Selection Strategies
+ 
+When duplicates are found, ImageAtlas can automatically pick the best image to keep:
+ 
+| Strategy | Behaviour |
+|---|---|
+| `resolution` | Keep the highest resolution image |
+| `filesize` | Keep the largest file |
+| `both` | Use resolution first, then alphabetic as tiebreaker |
+ 
+---
 
 ## 📝 Citation
 
